@@ -11,17 +11,54 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet weak var dividendField: UITextField!
+    @IBOutlet weak var divisorField: UITextField!
+    @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var dividerBtn: UIButton!
     
-    var sign = 0
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         print(divide(dividend: 6, divisor: 3))
+        
+        //add round corners to button... because it's prettier
+        dividerBtn.layer.cornerRadius = 5.0
+    }
+    
+    @IBAction func intDivide(_ sender: Any) {
+        
+
+        
+        guard var dividend = Int(dividendField.text!) else {
+            return
+        }
+        guard var divisor = Int(divisorField.text!) else {
+            return
+        }
+
+        
+        var sign = 0
+        
+        // Calculate sign of divisor i.e., sign will be negative only if either one of them is negative otherwise it will be positive
+        if (dividend >= 0) == (divisor > 0) {
+            sign = 1
+        } else {
+            sign = -1
+        }
+        
+        // Initialize the quotient
+        var quotient = 0
+        
+        while (dividend >= divisor) {
+            dividend -= divisor
+            quotient += 1
+        }
+        resultLabel.text = "\(sign * quotient)"
     }
     
     func divide(dividend: Int, divisor: Int) -> Int {
+        
+        var sign = 0
         
         // Calculate sign of divisor i.e., sign will be negative only if either one of them is negative otherwise it will be positive
         if (dividend >= 0) == (divisor > 0) {
